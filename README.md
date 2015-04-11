@@ -13,7 +13,7 @@
 - Son olarak SAKKIBU scriptini cihazınızda id_rsa.pub dosyası oluşturulmuş olan kullanıcı ile çalıştırın:
 
 
-    # pytohn3 sakkibu.py -p
+     # pytohn3 sakkibu.py -p
 
 ## Kullanım
 Bu script nmap ile yerel ağa bağlı olan cihazların kaç tane olduğunu sayar ve
@@ -32,7 +32,7 @@ Komutu konsoldan çalıştırmak için:
     -h | --help     Bu yardım dokümanını gösterir.
     -d | --dry-run  Scriptin dosya oluşturmadan sadece işlem çıktısı vermesini sağlar.
                     (Sayımı yap ve ekrana istatistikleri bas.)
-    -a | --all      Her türlü çıktıyı görüntüler. (Dikkat log dosyasını aşırı şişirebilir.)
+    -a | --all      Her türlü çıktıyı görüntüler. (Dikkat log dosyasını  şişirebilir.)
     -p | --push     Scriptin hazırlanan HTML'i depoya göndermesini sağlar.
 
 
