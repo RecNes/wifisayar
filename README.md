@@ -11,6 +11,7 @@ https://pages.github.com/ adresine gidin ve aşağıdaki adımları takip edin:
 - "Roll vanilla, or generate a site for your project" kısmından "Project site" seçin
 - "Generate a site, or start from scratch?" kısmında "Start from scratch" seçin
 
+
 Projenin depo sayfasına geri dönün ve "gh-pages" adında bir "Branch" oluşturun.
 **Gerekli:** "gh-pages" branchına bir adet boş "index.html" dosyası muhakkak gönderin.
 *Seçimsel:* ya da Projenizi "gh-pages" branchına aktarın
@@ -18,7 +19,7 @@ Projenin depo sayfasına geri dönün ve "gh-pages" adında bir "Branch" oluştu
 Son olarak SAKKIBU scriptini cihazınızda id_rsa.pub dosyası oluşturulmuş olan kullanıcı ile çalıştırın:
 
 
-     # pytohn3 sakkibu.py -p
+     # python3 sakkibu.py -p
 
 ## Kullanım
 Bu script nmap ile yerel ağa bağlı olan cihazların kaç tane olduğunu sayar ve
@@ -32,7 +33,7 @@ hangi depoya gönderilmesi gerektiğini belirtmeniz gerekiyor.
 
 Komutu konsoldan çalıştırmak için:
 
-    # pytohn3 sakkibu.py -h|[-d,-a,-p]
+    # python3 sakkibu.py -h|[-d,-a,-p]
 
     -h | --help     Bu yardım dokümanını gösterir.
     -d | --dry-run  Scriptin dosya oluşturmadan sadece işlem çıktısı vermesini sağlar.
