@@ -4,13 +4,18 @@
 
 ## Hazırlık
 
-- Github hesabınıza giriş yapın. 
-- Bu scriptin çalışacağı cihazda bir id_rsa.pub dosyası oluşturun ve GitHub hesabınıza ekleyin.
-- https://pages.github.com/ adresine gidin ve aşağıdaki adımları takip edin:
-    - "Roll vanilla, or generate a site for your project" kısmından "Project site" seçin
-    - "Generate a site, or start from scratch?" kısmında "Start from scratch" seçin
-- Projenin depo sayfasına geri dönün ve "gh-pages" adında bir "Branch" oluşturun.
-- Son olarak SAKKIBU scriptini cihazınızda id_rsa.pub dosyası oluşturulmuş olan kullanıcı ile çalıştırın:
+Github hesabınıza giriş yapın. 
+Bu scriptin çalışacağı cihazda bir id_rsa.pub dosyası oluşturun ve GitHub hesabınıza ekleyin.
+https://pages.github.com/ adresine gidin ve aşağıdaki adımları takip edin:
+
+- "Roll vanilla, or generate a site for your project" kısmından "Project site" seçin
+- "Generate a site, or start from scratch?" kısmında "Start from scratch" seçin
+
+Projenin depo sayfasına geri dönün ve "gh-pages" adında bir "Branch" oluşturun.
+**Gerekli:** "gh-pages" branchına bir adet boş "index.html" dosyası muhakkak gönderin.
+*Seçimsel:* ya da Projenizi "gh-pages" branchına aktarın
+*(Aksi takdirde "index.html" depoda olmadığından oluşturulan yeni dosya gönderilemeyecektir.)*
+Son olarak SAKKIBU scriptini cihazınızda id_rsa.pub dosyası oluşturulmuş olan kullanıcı ile çalıştırın:
 
 
      # pytohn3 sakkibu.py -p
