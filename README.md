@@ -2,6 +2,19 @@
 ## Şu Anda Kaç Kişi Burada uygulaması
 (İzmir Hackerspace Wifi Sayar uygulamasının forkudur.)
 
+## Hazırlık
+
+- Github hesabınıza giriş yapın. 
+- Bu scriptin çalışacağı cihazda bir id_rsa.pub dosyası oluşturun ve GitHub hesabınıza ekleyin.
+- https://pages.github.com/ adresine gidin ve aşağıdaki adımları takip edin:
+    - "Roll vanilla, or generate a site for your project" kısmından "Project site" seçin
+    - "Generate a site, or start from scratch?" kısmında "Start from scratch" seçin
+- Projenin depo sayfasına geri dönün ve "gh-pages" adında bir "Branch" oluşturun.
+- Son olarak SAKKIBU scriptini cihazınızda id_rsa.pub dosyası oluşturulmuş olan kullanıcı ile çalıştırın:
+
+
+    # pytohn3 sakkibu.py -p
+
 ## Kullanım
 Bu script nmap ile yerel ağa bağlı olan cihazların kaç tane olduğunu sayar ve
 hariç tutulacak olanlar listesinde bulunanları toplamdan düşüp, görüntülenebilir
@@ -19,7 +32,7 @@ Komutu konsoldan çalıştırmak için:
     -h | --help     Bu yardım dokümanını gösterir.
     -d | --dry-run  Scriptin dosya oluşturmadan sadece işlem çıktısı vermesini sağlar.
                     (Sayımı yap ve ekrana istatistikleri bas.)
-    -a | --all      Ağdaki bütün cihazları (hariç tutulanları da) sayıma ekler.
+    -a | --all      Her türlü çıktıyı görüntüler. (Dikkat log dosyasını aşırı şişirebilir.)
     -p | --push     Scriptin hazırlanan HTML'i depoya göndermesini sağlar.
 
 
@@ -29,4 +42,3 @@ ile erişi aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ay
 görevi ekleyebilirsiniz:
 
     * * * * python3 sakkibu.py -p 2>&1
-
