@@ -122,7 +122,6 @@ class SAKKIBU():
             sys.exit(2)
         try:
             opts, args = getopt.getopt(self.argv[1:], "hdap:", ["help", "dry-run", "all", "push"])
-            print(getopt.getopt(self.argv[1:], "hdap:", ["help", "dry-run", "all", "push"]))
         except getopt.GetoptError:
             print('Anahtarlar hatalı.')
             sys.exit(2)
