@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Şu anda kaç kişi burada uyguaması      İzmir Hackerspace 12.2014
+Şu anda kaç kişi burada uygulaması      İzmir Hackerspace 12.2014
 
 Geliştiriciler :
                     Ramazan Subaşı, Doğukan Güven, Sencer Hamarat
+
+Son Güncelleme: 04.2015
 """
 import getopt
 import os, sys, nmap, arrow
@@ -152,7 +154,7 @@ görevi ekleyebilirsiniz:
         self.commit_and_push()
 
 if __name__ == '__main__':
-    print(u"\nŞu anda kaç kişi burada uyguaması                       İzmir Hackerspace (2015)")
+    print(u"\nŞu anda kaç kişi burada uygulaması                       İzmir Hackerspace (2015)")
     sakkibu = SAKKIBU(sys.argv)
     print("-" * 80)
     sakkibu.run()
