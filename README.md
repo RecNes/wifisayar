@@ -14,9 +14,6 @@
 
 
 - Projenin depo sayfasına geri dönün ve "gh-pages" adında bir "Branch" oluşturun.
-- **Gerekli:** "gh-pages" branchına bir adet boş "index.html" dosyası muhakkak gönderin.
-- *Seçimsel:* ya da Projenizi "gh-pages" branchına aktarın
-- *(Aksi takdirde "index.html" depoda olmadığından oluşturulan yeni dosya gönderilemeyecektir.)*
 - Son olarak SAKKIBU scriptini cihazınızda id_rsa.pub dosyası oluşturulmuş olan kullanıcı ile çalıştırın:
 
 
