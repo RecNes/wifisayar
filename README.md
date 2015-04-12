@@ -56,3 +56,6 @@ Adres olarak github_pages'i oluştururken görmüşolduğunuz şablon kullanıl�
 
 
     http://kullanici_adi.github.io/depo_adi/
+
+
+Bu adresi \<iframe\> ile istediğiniz yerden çağırabilrisiniz.
