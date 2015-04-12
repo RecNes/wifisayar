@@ -24,7 +24,6 @@ class GitHub():
         return os.system(self.shell_quote(arguments))
 
     def commit_and_tag(self):
-        self.system("git", "checkout", "-b", "gh-pages")
         self.system("git", "commit", self.filetopush, "-m", "Automatic update")
         self.system("git", "push", "origin", "gh-pages")
 
