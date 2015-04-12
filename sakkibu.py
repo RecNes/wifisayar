@@ -24,6 +24,7 @@ class GitHub():
         return os.system(self.shell_quote(arguments))
 
     def commit_and_tag(self):
+        self.system("git", "checkout", "-b", "gh-pages")
         self.system("git", "commit", self.filetopush, "-m", "Automatic update")
         self.system("git", "push", "origin", "gh-pages")
 
@@ -105,7 +106,9 @@ görevi ekleyebilirsiniz:
     def create_html(self):
         if not self.dry_run:
             with open(self.html_file, 'w+') as html_file:
-                html_file.write(u''.join([self.message_text, "<br /><small>Son Kontrol: ", self.dtnow, '</small>']))
+                html_text = u''.join([self.message_text, "<br /><small>Son Kontrol: ", self.dtnow, '</small>'])
+                html_file.write(html_text)
+                if self.display_all: print(html_text)
             if self.display_all: print(u"HTML dosyası oluşturuldu.")
         else:
             if self.display_all: print(u"HTML dosyası oluşturulmadı.")
