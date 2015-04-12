@@ -29,7 +29,7 @@ bir html dosyasına yazdıktan sonra dosyayı github_pages'de yayınlanması iç
 otomatik olarak github depsuna gönderir.
 
 Bu işlemin çalışması için öncelikle bir github hesabınızın olması gerekmektedir.
-Ve ayrıca github_pages oluşturmuş olmanız ve GitHub().commit_and_tag() metodunda
+Ve ayrıca github_pages oluşturmuş olmanız ve **GitHub().commit_and_tag()** metodunda
 **self.system("git", "push", "origin", "gh-pages")** satırındaki parametreleri 
 değiştirerek hangi depoya gönderilmesi gerektiğini belirtmeniz gerekiyor.
 
