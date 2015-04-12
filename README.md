@@ -5,6 +5,7 @@
 ## Hazırlık
 
 - Github hesabınıza giriş yapın. 
+- Bu projeyi kendi hesabınıza klonlayın.
 - Bu scriptin çalışacağı cihazda bir id_rsa.pub dosyası oluşturun ve GitHub hesabınıza ekleyin.
 - https://pages.github.com/ adresine gidin ve aşağıdaki adımları takip edin:
 
@@ -47,4 +48,4 @@ oluşturabilirsiniz. Bunun için kullanıcının crontab listesine "crontab -e" 
 ile erişi aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ayarlanmş
 görevi ekleyebilirsiniz:
 
-    * * * * python3 sakkibu.py -p 2>&1
+    */10 * * * python3 sakkibu.py -p 2>&1
