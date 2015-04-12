@@ -79,8 +79,8 @@ görevi ekleyebilirsiniz:
 
         self.exceptional_ips = [
             # ip,               host,           reason
-            ('192.168.1.1',     'Router',       'always on'),
-            ('192.168.1.39',    'Raspi1',       "it's me"),
+            ('192.168.0.1',     'Router',       'always on'),
+            ('192.168.0.250',    'Raspi1',       "it's me"),
             ]
         self.exceptions_count = len(self.exceptional_ips)
 
