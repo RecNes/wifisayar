@@ -26,7 +26,7 @@ class GitHub():
         return os.system(self.shell_quote(arguments))
 
     def commit_and_tag(self):
-        self.system("git", "add", "-A")
+        self.system("git", "add", "-A")  # Güvenlik zaafiyeti ihtimali yaratır. Kontrol altına almak gerek.
         self.system("git", "commit", self.filetopush, "-m", "Automatic update")
         self.system("git", "push", "origin", "master:gh-pages")
 
