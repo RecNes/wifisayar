@@ -1,6 +1,16 @@
 # SAKKIBU
 ## Şu Anda Kaç Kişi Burada uygulaması
-(İzmir Hackerspace Wifi Sayar uygulamasının forkudur.)
+(İzmir Hackerspace Wifi Sayar uygulaması forkudur.)
+
+## Gereksinimler
+
+Aşağıdaki gereksinimler scriptin çalışacağı client'da kurulu olması gerekmektedir.
+
+- Python3
+    - python-nmap
+    - arrow
+- Nmap
+- Git Client
 
 ## Hazırlık
 
