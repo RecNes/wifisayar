@@ -50,3 +50,9 @@ ile erişi aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ay
 görevi ekleyebilirsiniz:
 
     */10 * * * python3 sakkibu.py -p 2>&1
+
+Şuy andan itibaren oluşturulup gönderilecek HTML'i github_pages'de görebilirsiniz.
+Adres olarak github_pages'i oluştururken görmüşolduğunuz şablon kullanılır:
+
+
+    http://kullanici_adi.github.io/depo_adi/
