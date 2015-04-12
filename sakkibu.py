@@ -25,7 +25,7 @@ class GitHub():
 
     def commit_and_tag(self):
         self.system("git", "commit", self.filetopush, "-m", "Automatic update")
-        self.system("git", "push", "origin", "gh-pages")
+        self.system("git", "push", "origin", "master:gh-pages")
 
 
 class SAKKIBU():
