@@ -55,7 +55,7 @@ Komutu konsoldan çalıştırmak için:
 
 Scriptin otomatik olarak belirli aralıklar ile çalışmasını sağlamak için cronjob
 oluşturabilirsiniz. Bunun için kullanıcının crontab listesine "crontab -e" komutu
-ile erişi aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ayarlanmş
+ile erişip aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ayarlanmş
 görevi ekleyebilirsiniz:
 
     */10 * * * python3 sakkibu.py -p 2>&1
