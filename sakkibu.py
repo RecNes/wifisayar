@@ -66,18 +66,17 @@ görevi ekleyebilirsiniz:
     def __init__(self, argv):
         self.argv = argv
         self.message_text = str()
-        self.hosts_list, self.hosts_count = list(), int()
+        self.hosts_list = list()
         self.display_all, self.dry_run, self.push = False, False, False
         self.time_stamp = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
         self.html_file = os.path.join(os.path.abspath('.'), 'index.html')
-
+        self.ip_block = '192.168.1.0/24'
         self.exceptional_ips = [
             # ip_address        host_type       reason
-            '192.168.0.1',      # Router        always on
-            '192.168.0.250',    # Raspi1        it's me
+            '192.168.1.1',      # Router        always on
+            '192.168.1.250',    # Raspi1        it's me
         ]
-        self.exceptions_count = len(self.exceptional_ips)
-
+        self.nm_args = ' -n -sP -PE'
         try: self.nm = nmap.PortScanner()
         except nmap.PortScannerError: raise Exception('Nmap modülü bulunamadı')
         except: raise Exception("Beklenmeyen hata oluştu:", sys.exc_info()[0])
@@ -98,11 +97,14 @@ görevi ekleyebilirsiniz:
         github_pages'e yüklenecek html dosyanın içeriği hazırlanır ve dosyaya yazılır.
         """
         if not self.dry_run:
-            with open(self.html_file, 'w+') as html_file:
-                html_text = u''.join([self.message_text, "<br /><small>Son Kontrol: ", self.time_stamp, '</small>'])
-                html_file.write(html_text)
-                if self.display_all: print(html_text)
-            if self.display_all: print(u"HTML dosyası oluşturuldu.")
+            try:
+                with open(self.html_file, 'w+') as html_file:
+                    html_text = u''.join([self.message_text, "<br /><small>Son Kontrol: ", self.time_stamp, '</small>'])
+                    html_file.write(html_text)
+                    if self.display_all: print(html_text)
+                if self.display_all: print(u"HTML dosyası oluşturuldu.")
+            except OSError as e:
+                raise Exception(u"{}\n{} dosyası işlenirken hata oluştu.".format(e, self.html_file))
         else:
             if self.display_all: print(u"HTML dosyası oluşturulmadı.")
 
@@ -110,25 +112,25 @@ görevi ekleyebilirsiniz:
         """
         İstatistiki bilgileri ekrana basar, Aynı zamanda oluşturulacak hmtl'in içeriğinin bir kısmı burada hazırlanır
         """
-        if (self.hosts_count - self.exceptions_count) < 1:
+        diff = len(self.hosts_list) - len(self.exceptional_ips)
+        if diff < 1:
             self.message_text = u"Şu anda kimse yok."
         else:
-            for host, status in self.hosts_list:
-                if self.display_all: print('{} : {}'.format(host, status))
+            for host in self.hosts_list:
+                if self.display_all: print(host)
             if not istisna:
-                self.message_text = u"Açık, {} cihaz bağlı".format(self.hosts_count - self.exceptions_count)
+                self.message_text = u"Açık, {} cihaz bağlı".format(diff)
             else:
-                self.message_text = u"İstisnalar ({}) dahil {} cihaz bağlı".format(self.exceptions_count,
-                                                                                   self.hosts_count)
+                self.message_text = u"İstisnalar ({}) dahil {} cihaz bağlı".format(len(self.exceptional_ips),
+                                                                                   len(self.hosts_list))
         print(self.message_text)
 
     def scan_area(self):
         """
         Yerel ağdaki cihazları tarar ve IP adreslerini liste olarak döndürür
         """
-        self.nm.scan(hosts='192.168.1.0/24', arguments=' -n -sP -PE')
-        self.hosts_list = [(x, self.nm[x]['status']['state']) for x in self.nm.all_hosts()]
-        self.hosts_count = len(self.hosts_list)
+        self.nm.scan(hosts=self.ip_block, arguments=self.nm_args)
+        self.hosts_list = [x for x in self.nm.all_hosts()]
 
     def get_args(self):
         """
@@ -139,9 +141,9 @@ görevi ekleyebilirsiniz:
         except getopt.GetoptError: raise Exception('Anahtarlar hatalı.')
         for opt, arg in opts:
             if opt in ('-h', '--help'): raise Exception(self.__doc__)
-            if opt in ("-a", "--all"): self.display_all = True
-            if opt in ("-d", "--dry-run"): self.dry_run = True
-            if opt in ("-p", "--push"): self.push = True
+            if opt in ('-a', '--all'): self.display_all = True
+            if opt in ('-d', '--dry-run'): self.dry_run = True
+            if opt in ('-p', '--push'): self.push = True
 
     def run(self):
         self.get_args()
