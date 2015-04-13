@@ -61,7 +61,7 @@ oluşturabilirsiniz. Bunun için kullanıcının crontab listesine "crontab -e" 
 ile erişip aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ayarlanmş
 görevi ekleyebilirsiniz:
 
-    * * * * python3 sakkibu.py -p 2>&1
+    */10 * * * python3 sakkibu.py -p 2>&1
     """
     def __init__(self, argv):
         self.argv = argv
