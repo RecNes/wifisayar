@@ -8,8 +8,11 @@ Geliştiriciler :
 
 Son Güncelleme: 04.2015
 """
-import getopt
-import os, sys, nmap, arrow
+try:
+    import os, sys, datetime, nmap, getopt
+except Exception as e:
+    print(e, u"\n Gerekli modül yüklenemedi.")
+    sys.exit(2)
 
 
 class GitHub():
@@ -55,39 +58,58 @@ Komutu konsoldan çalıştırmak için:
 
 Scriptin otomatik olarak belirli aralıklar ile çalışmasını sağlamak için cronjob
 oluşturabilirsiniz. Bunun için kullanıcının crontab listesine "crontab -e" komutu
-ile erişi aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ayarlanmş
+ile erişip aşağıdaki 10'ar dakikalık zaman dilimlerinde yinelenmesi için ayarlanmş
 görevi ekleyebilirsiniz:
 
     * * * * python3 sakkibu.py -p 2>&1
     """
     def __init__(self, argv):
         self.argv = argv
-        self.display_all = False
-        self.dry_run = False
-        self.push = False
-        self.hosts_count = int()
-        self.hosts_list = list()
         self.message_text = str()
-        self.dtnow = arrow.now().format('DD.MM.YYYY HH:mm')
-        self.base_path = os.path.abspath('.')
-        self.html_file = os.path.join(self.base_path, 'index.html')  # yerelde oluşturulup git pages'e gönderilecek index.html
-        try:
-            self.nm = nmap.PortScanner()
-        except nmap.PortScannerError:
-            print('Nmap bulunamadı', sys.exc_info()[0])
-            sys.exit(2)
-        except:
-            print("Beklenmeyen hata:", sys.exc_info()[0])
-            sys.exit(2)
+        self.hosts_list, self.hosts_count = list(), int()
+        self.display_all, self.dry_run, self.push = False, False, False
+        self.time_stamp = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+        self.html_file = os.path.join(os.path.abspath('.'), 'index.html')
 
         self.exceptional_ips = [
-            # ip,               host,           reason
-            ('192.168.0.1',     'Router',       'always on'),
-            ('192.168.0.250',    'Raspi1',       "it's me"),
-            ]
+            # ip_address        host_type       reason
+            '192.168.0.1',      # Router        always on
+            '192.168.0.250',    # Raspi1        it's me
+        ]
         self.exceptions_count = len(self.exceptional_ips)
 
+        try: self.nm = nmap.PortScanner()
+        except nmap.PortScannerError: raise Exception('Nmap modülü bulunamadı')
+        except: raise Exception("Beklenmeyen hata oluştu:", sys.exc_info()[0])
+
+    def commit_and_push(self):
+        """
+        Hazırlanan html dosyası github_pages'e yüklenir.
+        """
+        if self.push:
+            if self.display_all: print(u"Dosya depoya gönderiliyor....")
+            GitHub(self.html_file).commit_and_tag()
+            if self.display_all: print(u"Dosya depoya gönderildi.")
+        else:
+            if self.display_all: print(u"Depoya herhangi bir dosya gönderilmedi.")
+
+    def create_html(self):
+        """
+        github_pages'e yüklenecek html dosyanın içeriği hazırlanır ve dosyaya yazılır.
+        """
+        if not self.dry_run:
+            with open(self.html_file, 'w+') as html_file:
+                html_text = u''.join([self.message_text, "<br /><small>Son Kontrol: ", self.time_stamp, '</small>'])
+                html_file.write(html_text)
+                if self.display_all: print(html_text)
+            if self.display_all: print(u"HTML dosyası oluşturuldu.")
+        else:
+            if self.display_all: print(u"HTML dosyası oluşturulmadı.")
+
     def print_stats(self, istisna=False):
+        """
+        İstatistiki bilgileri ekrana basar, Aynı zamanda oluşturulacak hmtl'in içeriğinin bir kısmı burada hazırlanır
+        """
         if (self.hosts_count - self.exceptions_count) < 1:
             self.message_text = u"Şu anda kimse yok."
         else:
@@ -101,47 +123,22 @@ görevi ekleyebilirsiniz:
         print(self.message_text)
 
     def scan_area(self):
+        """
+        Yerel ağdaki cihazları tarar ve IP adreslerini liste olarak döndürür
+        """
         self.nm.scan(hosts='192.168.1.0/24', arguments=' -n -sP -PE')
         self.hosts_list = [(x, self.nm[x]['status']['state']) for x in self.nm.all_hosts()]
         self.hosts_count = len(self.hosts_list)
 
-    def create_html(self):
-        if not self.dry_run:
-            with open(self.html_file, 'w+') as html_file:
-                html_text = u''.join([self.message_text, "<br /><small>Son Kontrol: ", self.dtnow, '</small>'])
-                html_file.write(html_text)
-                if self.display_all: print(html_text)
-            if self.display_all: print(u"HTML dosyası oluşturuldu.")
-        else:
-            if self.display_all: print(u"HTML dosyası oluşturulmadı.")
-
-    def commit_and_push(self):
-        if self.push:
-            if self.display_all: print(u"Dosya depoya gönderiliyor.")
-            github = GitHub(self.html_file)
-            github.commit_and_tag()
-            if self.display_all: print(u"Dosya depoya gönderildi.")
-        else:
-            if self.display_all: print(u"Depoya herhangi bir dosya gönderilmedi.")
-
     def get_args(self):
         """
         Konsoldan verilen argümanlar alınır.
-        :return:
         """
-        if not len(self.argv) > 1:
-            print("Lütfen anahtar belirtin. Yardım için -h")
-            sys.exit(2)
-        try:
-            opts, args = getopt.getopt(self.argv[1:], "hdap", ["help", "dry-run", "all", "push"])
-        except getopt.GetoptError:
-            print('Anahtarlar hatalı.')
-            sys.exit(2)
-
+        if not len(self.argv) > 1: raise Exception("Lütfen anahtar belirtin. Yardım için -h")
+        try: opts, args = getopt.getopt(self.argv[1:], "hdap", ["help", "dry-run", "all", "push"])
+        except getopt.GetoptError: raise Exception('Anahtarlar hatalı.')
         for opt, arg in opts:
-            if opt in ('-h', '--help'):
-                print(self.__doc__)
-                sys.exit()
+            if opt in ('-h', '--help'): raise Exception(self.__doc__)
             if opt in ("-a", "--all"): self.display_all = True
             if opt in ("-d", "--dry-run"): self.dry_run = True
             if opt in ("-p", "--push"): self.push = True
@@ -155,8 +152,12 @@ görevi ekleyebilirsiniz:
 
 if __name__ == '__main__':
     print(u"\nŞu anda kaç kişi burada uygulaması                       İzmir Hackerspace (2015)")
-    sakkibu = SAKKIBU(sys.argv)
     print("-" * 80)
-    sakkibu.run()
-    print("-" * 80)
-    sys.exit(0)
+    try:
+        SAKKIBU(sys.argv).run()
+        print("-" * 80)
+        sys.exit(0)
+    except Exception as e:
+        print(e)
+        print("-" * 80)
+        sys.exit(2)

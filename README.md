@@ -7,8 +7,7 @@
 Aşağıdaki gereksinimler scriptin çalışacağı client'da kurulu olması gerekmektedir.
 
 - Python3
-    - python-nmap
-    - arrow
+- Python-nmap
 - Nmap
 - Git Client
 
